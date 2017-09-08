@@ -9,7 +9,7 @@
   <!-- 文章列表容器 -->
   <block wx:for="{{posts_key}}">
    <!-- template -->
-   <view catchtap="onPostTap" data-postId="{{item.postId}}" data-post-name-id = "name">
+   <view catchtap='onPostTap' data-postId="{{item.postId}}" data-post-name-id = "name">
       <template is="postItem" data="{{...item}}" />
    </view>
   </block>

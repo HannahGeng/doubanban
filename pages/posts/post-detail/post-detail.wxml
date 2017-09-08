@@ -1,3 +1,25 @@
-<text>
-  这是文章详情页面
-</text>
+<!-- 先静后动，先样式后数据 -->
+<view class='container'>
+    <image class='head-image' src='{{postData.headImageSrc}}'></image>
+    <image class='audio' src='/images/music/music-start.png'></image>
+    <view class='postData.author-date'>
+      <image class='avatar' src='{{postData.avatar}}'></image>
+      <text class='author'>{{postData.author}}</text>
+      <text class='const-text'>发表于</text>
+      <text class='date'>{{postData.dateTime}}</text>
+    </view>
+    <text class='title'>{{postData.title}}</text>
+    <view class='tool'>
+      <view class='circle-img'>
+          <image wx:if="{{collected}}" catchtap='onCollectionTap' src='/images/icon/collection.png'></image>
+          <image wx:else catchtap='onCollectionTap' src='/images/icon/chat.png'></image>
+          <image class='share-img' src='/images/icon/view.png'></image>
+      </view>
+      <!-- 分割线 -->
+      <view class='horizon'></view>
+    </view>
+    <!-- 文章正文 -->
+    <view class='detail'>
+        <text>{{postData.detail}}</text>
+    </view>
+</view>

@@ -1,0 +1,16 @@
+<import src="post-item/post-item-template.wxml" />
+<view>
+<!-- vertical='true'为纵向滚动 -->
+  <swiper indicator-dots='true' autoplay='true' interval='2000'>
+    <swiper-item><image src='/images/img2.png'></image></swiper-item>
+    <swiper-item><image src='/images/img1.png'></image></swiper-item>
+    <swiper-item><image src='/images/img3.png'></image></swiper-item>
+  </swiper>
+  <!-- 文章列表容器 -->
+  <block wx:for="{{posts_key}}">
+   <!-- template -->
+   <view catchtap="onPostTap" data-postId="{{item.postId}}" data-post-name-id = "name">
+      <template is="postItem" data="{{...item}}" />
+   </view>
+  </block>
+</view>

@@ -1,13 +1,14 @@
 var postsData = require('../../../data/posts-data.js')
+// 拿到全局 app 变量
+var app = getApp()
 
 Page({
-
   data: {
-
+    isPlayingMusic:false,
   },
 
   onLoad: function(options) {
-    
+    var globalData = app.globalData;
     var postId = options.id;
     this.data.currentPostId = postId;
     var postData = postsData.postList[postId];
@@ -32,6 +33,33 @@ Page({
       postsCollected[postId] = false;
       wx.setStorageSync('posts_collected', postsCollected)
     }
+
+    if (app.globalData.g_isPlayingMusic && app.globalData.g_currentMusicPostId === postId){
+      this.setData({
+        isPlayingMusic :true
+      })
+    }
+    this.setAudioMonitor();
+  },
+
+  // 音乐播放
+  setAudioMonitor:function(){
+    var that = this;
+    wx.onBackgroundAudioPlay(function () {
+      that.setData({
+        isPlayingMusic: true
+      })
+      app.globalData.g_isPlayingMusic = true;
+      app.globalData.g_currentMusicPostId = that.data.currentPostId;
+    });
+    wx.onBackgroundAudioPause(function () {
+
+      that.setData({
+        isPlayingMusic: false
+      })
+      app.globalData.g_isPlayingMusic = false;
+      app.globalData.g_currentMusicPostId = null;
+    });
   },
 
   onCollectionTap:function(event){
@@ -132,6 +160,29 @@ Page({
         })
       }
     })
+  },
+
+  onMusicTap:function(event){
+    var currentPostId = this.data.currentPostId;
+    var postData = postsData.postList[currentPostId];
+    var isPlayingMusic = this.data.isPlayingMusic;
+    if(isPlayingMusic){
+      wx.pauseBackgroundAudio();
+      this.setData({
+        isPlayingMusic : false
+      })
+    }
+    else{
+      wx.playBackgroundAudio({
+        dataUrl: postData.music.url,
+        title: postData.music.title,
+        coverImgUrl: postData.music.coverImg,
+      })
+      this.setData({
+        isPlayingMusic : true
+      })
+    }
+   
   }
 
 })

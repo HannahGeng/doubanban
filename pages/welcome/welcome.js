@@ -7,7 +7,7 @@ Page({
     // });
 
     // 没有返回键
-    wx.redirectTo({
+    wx.switchTab({
       url:"../posts/post"
     });
 

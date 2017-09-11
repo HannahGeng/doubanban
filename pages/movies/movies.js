@@ -1,4 +1,4 @@
-// pages/post-detail/post-detail.js
+// pages/movies/movies.js
 Page({
 
   /**
